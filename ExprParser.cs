@@ -65,6 +65,9 @@ namespace dc
 			myIndex = 0;
 			myExpr = expr;
 			myCurrentToken = null;
+            myEnteredToken = false;
+            myCurrentTokenId = TokId.EOS;
+            myCurrentTokenText = string.Empty;
 		}
 
 		public Token getNextToken()
@@ -81,65 +84,55 @@ namespace dc
 			return myCurrentToken;
 		}
 
+        Token buildRecognizedToken(TokId tokenId, string tokenText)
+        {
+			if( myEnteredToken ) {
+				return new Token(myCurrentTokenId, myCurrentTokenText);
+			}
+			++myIndex;
+			return new Token(tokenId, tokenText);
+        }
+
 		Token doGetNextToken()
 		{
 			if( myIndex >= myExpr.Length )
 				return new Token(TokId.EOS, string.Empty);
-			TokId currentTokenId = TokId.EOS;
-			string currentTokenText = string.Empty;
-			bool enteredToken = false, endOfToken = false;
-			for( ; myIndex < myExpr.Length && !endOfToken; ++myIndex ) {
+			myCurrentTokenId = TokId.EOS;
+			myCurrentTokenText = string.Empty;
+			myEnteredToken = false;
+
+            for( ; myIndex < myExpr.Length; ++myIndex ) {
 				switch( myExpr[myIndex] ) {
-					case '+': 
-						if( enteredToken ) {
-							return new Token(currentTokenId, currentTokenText);
-						} else {
-							++myIndex;
-							return new Token(TokId.PLUS_OP, "+");
-						}
-                    case '-':
-                        if( enteredToken ) {
-                            return new Token(currentTokenId, currentTokenText);
-                        } else {
-                            ++myIndex;
-                            return new Token(TokId.MINUS_OP, "-");
-                        }
-					case '*':
-						if( enteredToken ) {
-							return new Token(currentTokenId, currentTokenText);
-						} else {
-							++myIndex;
-							return new Token(TokId.MUL_OP, "*");
-						}
-					case '/':
-						if( enteredToken ) {
-							return new Token(currentTokenId, currentTokenText);
-						} else {
-							++myIndex;
-							return new Token(TokId.DIV_OP, "/");
-						}
-					case '0': case '1': case '2': case '3': case '4':
-					case '5': case '6': case '7': case '8': case '9':
-						enteredToken = true;
-						currentTokenId = TokId.NUMBER;
-						currentTokenText += myExpr[myIndex];
-						break;
+					case '+': return buildRecognizedToken(TokId.PLUS_OP,  "+");
+                    case '-': return buildRecognizedToken(TokId.MINUS_OP, "-");
+					case '*': return buildRecognizedToken(TokId.MUL_OP,   "*");
+					case '/': return buildRecognizedToken(TokId.DIV_OP,   "/");
+                    case '0': case '1': case '2': case '3': case '4':
+                    case '5': case '6': case '7': case '8': case '9': {
+                        myEnteredToken = true;
+                        myCurrentTokenId = TokId.NUMBER;
+                        myCurrentTokenText += myExpr[myIndex];
+                        break;
+                    }
 					case ' ': {
-							if( enteredToken ) { 
-								endOfToken = true;
-							} else {
-								continue;
-							}
+						if( myEnteredToken ) { 
+							myEnteredToken = true;
+						} else {
+							continue;
 						}
-						break;
+                        break;
+					}
 				}
 			}
-			return new Token(currentTokenId, currentTokenText);
+			return new Token(myCurrentTokenId, myCurrentTokenText);
 		}
 
 		int myIndex;
 		string myExpr;
 		Token myCurrentToken;
+        bool myEnteredToken;
+        TokId myCurrentTokenId;
+        string myCurrentTokenText;
 	}
 
 	/// <summary>
