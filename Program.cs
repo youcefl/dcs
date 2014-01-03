@@ -70,16 +70,21 @@ namespace dc
                 }
             }
 
-			ExprParser parser = new ExprParser();
-			ExprNode exprAST = parser.parseExpr(expression);
+            try {
+			    ExprParser parser = new ExprParser();
+			    ExprNode exprAST = parser.parseExpr(expression);
 
-            if( isVerbose ) {
-                ExprPrinter printer = new ExprPrinter();
-                printer.printExpr(exprAST, System.Console.Out);
+                if( isVerbose ) {
+                    ExprPrinter printer = new ExprPrinter();
+                    printer.printExpr(exprAST, System.Console.Out);
+                }
+			    ExprEvaluator evaluator = new ExprEvaluator();
+			    Number result = evaluator.evaluate(exprAST);
+			    System.Console.WriteLine(result.ToString());
+            } catch (Exception e) {
+                System.Console.Error.WriteLine(e.Message);
             }
-			ExprEvaluator evaluator = new ExprEvaluator();
-			Number result = evaluator.evaluate(exprAST);
-			System.Console.WriteLine(result.ToString());
+
 			return 0;
 		}
 	}
