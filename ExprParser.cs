@@ -122,6 +122,8 @@ namespace dc
 						}
                         break;
 					}
+                    default:
+                        throw new ParseException(string.Format("character `{0}' was unexpected.", myExpr[myIndex]));
 				}
 			}
 			return new Token(myCurrentTokenId, myCurrentTokenText);
@@ -170,7 +172,7 @@ namespace dc
                         break;
                     }
 					default:
-						throw new System.Exception("Parse exception, unexpected token");
+						throw new ParseException(string.Format("unexpected token `{0}'", tok.ToString()));
 				}
 			}
 			return left;
@@ -207,7 +209,7 @@ namespace dc
 			Token tok = myLexer.getCurrentToken();
 			if( tok.Id != TokId.NUMBER )
 			{
-				throw new System.Exception("Parse exception, a number was expected");
+				throw new ParseException("a number was expected");
 			}
 			myLexer.getNextToken();
 			return new NumberNode(tok.Text);
