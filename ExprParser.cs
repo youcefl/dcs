@@ -32,12 +32,14 @@ namespace dc
 
 	enum TokId
 	{
-		NUMBER,
-		PLUS_OP,
-        MINUS_OP,
-		MUL_OP,
-        DIV_OP,
-		EOS
+		NUMBER,     //!< A number
+		PLUS_OP,    //!< Plus sign '+'
+        MINUS_OP,   //!< Minus sign '-'
+		MUL_OP,     //!< Multiplication operator '*'
+        DIV_OP,     //!< Division operator '/'
+        LPAR,       //!< Left parenthesis
+        RPAR,       //!< Right parenthesis
+		EOS         //!< End of stream
 	}
 	class Token
 	{
@@ -54,6 +56,11 @@ namespace dc
 		{
 			get { return myText; }
 		}
+        public override string ToString()
+        {
+            return string.Format("[{0},\"{1}\"]", myId, myText);
+        }
+
 		TokId myId;
 		string myText;
 	}
@@ -107,6 +114,8 @@ namespace dc
                     case '-': return buildRecognizedToken(TokId.MINUS_OP, "-");
 					case '*': return buildRecognizedToken(TokId.MUL_OP,   "*");
 					case '/': return buildRecognizedToken(TokId.DIV_OP,   "/");
+                    case '(': return buildRecognizedToken(TokId.LPAR,     "(");
+                    case ')': return buildRecognizedToken(TokId.RPAR,     ")");
                     case '0': case '1': case '2': case '3': case '4':
                     case '5': case '6': case '7': case '8': case '9': {
                         myEnteredToken = true;
@@ -172,7 +181,7 @@ namespace dc
                         break;
                     }
 					default:
-						throw new ParseException(string.Format("unexpected token `{0}'", tok.ToString()));
+						return left;
 				}
 			}
 			return left;
@@ -180,19 +189,19 @@ namespace dc
 
 		ExprNode parseMulExpr()
 		{
-			ExprNode left = parseNumber();
+			ExprNode left = parseTerm();
             bool endLoop = false;
 			for(Token tok = myLexer.getCurrentToken(); !endLoop; tok = myLexer.getCurrentToken()) {
                 switch( tok.Id ) {
                     case TokId.MUL_OP: {
                         myLexer.getNextToken();
-                        ExprNode right = parseNumber();
+                        ExprNode right = parseTerm();
                         left = new MulExprNode(left, right);
                         break;
                     }
                     case TokId.DIV_OP: {
                         myLexer.getNextToken();
-                        ExprNode right = parseNumber();
+                        ExprNode right = parseTerm();
                         left = new DivExprNode(left, right);
                         break;
                     }
@@ -203,6 +212,26 @@ namespace dc
 			}
             return left;
 		}
+
+        ExprNode parseTerm()
+        {
+            Token tok = myLexer.getCurrentToken();
+            switch(tok.Id ) {
+                case TokId.LPAR: {
+                    myLexer.getNextToken();
+                    ExprNode term = parseExpr();
+                    Token rpar = myLexer.getCurrentToken();
+                    if( rpar.Id != TokId.RPAR ) {
+                        throw new ParseException(string.Format("Unexpected token `{0}' encountered", rpar.ToString()));
+                    }
+                    myLexer.getNextToken();
+                    return term;
+                }
+                case TokId.NUMBER: return parseNumber();
+                default:
+                    throw new ParseException(string.Format("Unexpected token `{0}' encountered", tok.ToString()));
+            }
+        }
 
 		ExprNode parseNumber()
 		{
