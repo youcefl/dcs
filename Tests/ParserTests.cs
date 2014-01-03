@@ -112,6 +112,20 @@ namespace dc.Tests
         }
 
         [TestMethod]
+        void parseDivExpr()
+        {
+            ExprParser parser = new ExprParser();
+            ExprNode exprAST = parser.parseExpr("4 / 2");
+
+            Assert.isOfType(exprAST, typeof(DivExprNode));
+            DivExprNode divExpr = exprAST as DivExprNode;
+            Assert.isTrue(divExpr.LeftOperand as NumberNode != null);
+            Assert.areEq(new Number("4"), (divExpr.LeftOperand as NumberNode).Value);
+            Assert.isTrue(divExpr.RightOperand as NumberNode != null);
+            Assert.areEq(new Number("2"), (divExpr.RightOperand as NumberNode).Value);
+        }
+
+        [TestMethod]
         void parseAddExprWithThreeFactors()
         {
             ExprParser parser = new ExprParser();
@@ -127,6 +141,42 @@ namespace dc.Tests
             Assert.isOfType(mul_5.RightOperand, typeof(NumberNode));
             Assert.areEq(new Number("3"), (mul_5.LeftOperand as NumberNode).Value);
             Assert.areEq(new Number("5"), (mul_5.RightOperand as NumberNode).Value);
+        }
+
+        [TestMethod]
+        void parseDivExprWithThreeFactors()
+        {
+            ExprParser parser = new ExprParser();
+            ExprNode exprAST = parser.parseExpr("1024 / 256 / 2");
+
+            Assert.isOfType(exprAST, typeof(DivExprNode));
+            DivExprNode div_2 = exprAST as DivExprNode;
+            Assert.isOfType(div_2.LeftOperand, typeof(DivExprNode));
+            Assert.isOfType(div_2.RightOperand, typeof(NumberNode));
+            Assert.areEq(new Number("2"), (div_2.RightOperand as NumberNode).Value);
+            DivExprNode div_256 = div_2.LeftOperand as DivExprNode;
+            Assert.isOfType(div_256.LeftOperand, typeof(NumberNode));
+            Assert.isOfType(div_256.RightOperand, typeof(NumberNode));
+            Assert.areEq(new Number("1024"), (div_256.LeftOperand as NumberNode).Value);
+            Assert.areEq(new Number( "256"), (div_256.RightOperand as NumberNode).Value);
+        }
+
+        [TestMethod]
+        void parseMulExprDivExpr()
+        {
+            ExprParser parser = new ExprParser();
+            ExprNode exprAST = parser.parseExpr("6 * 8 / 2");
+
+            Assert.isOfType(exprAST, typeof(DivExprNode));
+            DivExprNode div_2 = exprAST as DivExprNode;
+            Assert.isOfType(div_2.LeftOperand, typeof(MulExprNode));
+            Assert.isOfType(div_2.RightOperand, typeof(NumberNode));
+            Assert.areEq(new Number("2"), (div_2.RightOperand as NumberNode).Value);
+            MulExprNode mul_8 = div_2.LeftOperand as MulExprNode;
+            Assert.isOfType(mul_8.LeftOperand, typeof(NumberNode));
+            Assert.isOfType(mul_8.RightOperand, typeof(NumberNode));
+            Assert.areEq(new Number("6"), (mul_8.LeftOperand as NumberNode).Value);
+            Assert.areEq(new Number("8"), (mul_8.RightOperand as NumberNode).Value);
         }
 
         [TestMethod]

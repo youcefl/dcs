@@ -59,13 +59,21 @@ namespace dc
         {
         }
 
-		public virtual void visitIn(MulExprNode n)
-		{
-		}
+        public virtual void visitIn(MulExprNode n)
+        {
+        }
 
-		public virtual void visitOut(MulExprNode n)
-		{
-		}
+        public virtual void visitOut(MulExprNode n)
+        {
+        }
+
+        public virtual void visitIn(DivExprNode n)
+        {
+        }
+
+        public virtual void visitOut(DivExprNode n)
+        {
+        }
 
 		#endregion
 	}

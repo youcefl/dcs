@@ -71,12 +71,19 @@ namespace dc
                 myValueStack.Push(e1 - e2);
             }
 
-			public override void visitOut(MulExprNode n)
-			{
-				Number e2 = (Number)myValueStack.Pop();
-				Number e1 = (Number)myValueStack.Pop();
-				myValueStack.Push(e1 * e2);
-			}
+            public override void visitOut(MulExprNode n)
+            {
+                Number e2 = (Number)myValueStack.Pop();
+                Number e1 = (Number)myValueStack.Pop();
+                myValueStack.Push(e1 * e2);
+            }
+
+            public override void visitOut(DivExprNode n)
+            {
+                Number e2 = (Number)myValueStack.Pop();
+                Number e1 = (Number)myValueStack.Pop();
+                myValueStack.Push(e1 / e2);
+            }
 
 			public Number Value 
 			{

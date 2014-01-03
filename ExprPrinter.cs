@@ -78,16 +78,26 @@ namespace dc
                 myWriter.WriteLine("{0}</Sub>", myTabs);
             }
 
-			public override void visitIn(MulExprNode n)
-			{
-				myWriter.WriteLine("{0}<Mul>", myTabs);
-				indent();
-			}
-			public override void visitOut(MulExprNode n)
-			{
+            public override void visitIn(MulExprNode n)
+            {
+                myWriter.WriteLine("{0}<Mul>", myTabs);
+                indent();
+            }
+            public override void visitOut(MulExprNode n)
+            {
                 unIndent();
                 myWriter.WriteLine("{0}</Mul>", myTabs);
-			}
+            }
+            public override void visitIn(DivExprNode n)
+            {
+                myWriter.WriteLine("{0}<Div>", myTabs);
+                indent();
+            }
+            public override void visitOut(DivExprNode n)
+            {
+                unIndent();
+                myWriter.WriteLine("{0}</Div>", myTabs);
+            }
 
 			void indent()
 			{

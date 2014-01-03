@@ -39,7 +39,9 @@ namespace dc
         void visitIn(SubExprNode n);
         void visitOut(SubExprNode n);
         void visitIn(MulExprNode n);
-		void visitOut(MulExprNode n);
-	}
+        void visitOut(MulExprNode n);
+        void visitIn(DivExprNode n);
+        void visitOut(DivExprNode n);
+    }
 }
 

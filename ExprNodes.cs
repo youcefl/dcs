@@ -138,4 +138,23 @@ namespace dc
 			v.visitOut(this);
 		}
 	}
+
+    /// <summary>
+    /// Division expression node
+    /// </summary>
+    class DivExprNode : BinaryExprNode
+    {
+        public DivExprNode(ExprNode leftOp, ExprNode rightOp)
+            : base(leftOp, rightOp)
+        {
+        }
+
+        public override void accept(ExprVisitor v)
+        {
+            v.visitIn(this);
+            LeftOperand.accept(v);
+            RightOperand.accept(v);
+            v.visitOut(this);
+        }
+    }
 }

@@ -36,6 +36,7 @@ namespace dc
 		PLUS_OP,
         MINUS_OP,
 		MUL_OP,
+        DIV_OP,
 		EOS
 	}
 	class Token
@@ -110,6 +111,13 @@ namespace dc
 							++myIndex;
 							return new Token(TokId.MUL_OP, "*");
 						}
+					case '/':
+						if( enteredToken ) {
+							return new Token(currentTokenId, currentTokenText);
+						} else {
+							++myIndex;
+							return new Token(TokId.DIV_OP, "/");
+						}
 					case '0': case '1': case '2': case '3': case '4':
 					case '5': case '6': case '7': case '8': case '9':
 						enteredToken = true;
@@ -178,12 +186,27 @@ namespace dc
 		ExprNode parseMulExpr()
 		{
 			ExprNode left = parseNumber();
-			for(Token tok = myLexer.getCurrentToken(); tok.Id == TokId.MUL_OP; tok = myLexer.getCurrentToken()) {
-				myLexer.getNextToken();
-				ExprNode right = parseNumber();
-				left = new MulExprNode(left, right);
+            bool endLoop = false;
+			for(Token tok = myLexer.getCurrentToken(); !endLoop; tok = myLexer.getCurrentToken()) {
+                switch( tok.Id ) {
+                    case TokId.MUL_OP: {
+                        myLexer.getNextToken();
+                        ExprNode right = parseNumber();
+                        left = new MulExprNode(left, right);
+                        break;
+                    }
+                    case TokId.DIV_OP: {
+                        myLexer.getNextToken();
+                        ExprNode right = parseNumber();
+                        left = new DivExprNode(left, right);
+                        break;
+                    }
+                    default:
+                        endLoop = true;
+                        break;
+                }
 			}
-			return left;
+            return left;
 		}
 
 		ExprNode parseNumber()

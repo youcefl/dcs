@@ -51,9 +51,13 @@ namespace dc
             return new Number(a.myValue - b.myValue);
         }
         public static Number operator *(Number a, Number b)
-		{
-			return new Number(a.myValue * b.myValue);
-		}
+        {
+            return new Number(a.myValue * b.myValue);
+        }
+        public static Number operator /(Number a, Number b)
+        {
+            return new Number(a.myValue / b.myValue);
+        }
 
 		public override string ToString()
 		{
