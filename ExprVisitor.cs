@@ -51,6 +51,14 @@ namespace dc
 		{
 		}
 
+        public virtual void visitIn(SubExprNode n)
+        {
+        }
+
+        public virtual void visitOut(SubExprNode n)
+        {
+        }
+
 		public virtual void visitIn(MulExprNode n)
 		{
 		}

@@ -34,6 +34,7 @@ namespace dc
 	{
 		NUMBER,
 		PLUS_OP,
+        MINUS_OP,
 		MUL_OP,
 		EOS
 	}
@@ -95,6 +96,13 @@ namespace dc
 							++myIndex;
 							return new Token(TokId.PLUS_OP, "+");
 						}
+                    case '-':
+                        if( enteredToken ) {
+                            return new Token(currentTokenId, currentTokenText);
+                        } else {
+                            ++myIndex;
+                            return new Token(TokId.MINUS_OP, "-");
+                        }
 					case '*':
 						if( enteredToken ) {
 							return new Token(currentTokenId, currentTokenText);
@@ -116,7 +124,6 @@ namespace dc
 							}
 						}
 						break;
-
 				}
 			}
 			return new Token(currentTokenId, currentTokenText);
@@ -132,10 +139,6 @@ namespace dc
 	/// </summary>
 	class ExprParser
 	{
-		public ExprParser()
-		{
-		}
-
 		public ExprNode parseExpr(string expr)
 		{
 			myLexer = new ExprLexer(expr);
@@ -157,8 +160,14 @@ namespace dc
 						myLexer.getNextToken();
 						ExprNode right = parseMulExpr();
 						left = new AddExprNode(left, right);
+                        break;
 					}
-					break;
+                    case TokId.MINUS_OP: {
+                        myLexer.getNextToken();
+                        ExprNode right = parseMulExpr();
+                        left = new SubExprNode(left, right);
+                        break;
+                    }
 					default:
 						throw new System.Exception("Parse exception, unexpected token");
 				}

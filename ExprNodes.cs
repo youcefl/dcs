@@ -101,6 +101,25 @@ namespace dc
 		}
 	}
 
+    /// <summary>
+    /// Subtraction expression node
+    /// </summary>
+    class SubExprNode : BinaryExprNode
+    {
+        public SubExprNode(ExprNode leftOp, ExprNode rightOp)
+            : base(leftOp, rightOp)
+        {
+        }
+
+        public override void accept(ExprVisitor v)
+        {
+            v.visitIn(this);
+            LeftOperand.accept(v);
+            RightOperand.accept(v);
+            v.visitOut(this);
+        }
+    }
+
 	/// <summary>
 	/// Multiplicative expression node
 	/// </summary>

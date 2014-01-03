@@ -52,6 +52,13 @@ namespace dc.Tests
         }
 
         [TestMethod]
+        void evaluteSubExpression()
+        {
+            ExprEvaluator evaluator = new ExprEvaluator();
+            Assert.areEq(new Number("-2"), evaluator.evaluate(new SubExprNode(new NumberNode("29"), new NumberNode("31"))));
+        }
+
+        [TestMethod]
         void evaluteMulExpression()
         {
             ExprEvaluator evaluator = new ExprEvaluator();

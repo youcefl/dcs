@@ -42,11 +42,15 @@ namespace dc
 		{
 			myValue = val;
 		}
-		public static Number operator +(Number a, Number b)
-		{
-			return new Number(a.myValue + b.myValue);
-		}
-		public static Number operator *(Number a, Number b)
+        public static Number operator +(Number a, Number b)
+        {
+            return new Number(a.myValue + b.myValue);
+        }
+        public static Number operator -(Number a, Number b)
+        {
+            return new Number(a.myValue - b.myValue);
+        }
+        public static Number operator *(Number a, Number b)
 		{
 			return new Number(a.myValue * b.myValue);
 		}

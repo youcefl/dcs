@@ -80,6 +80,24 @@ namespace dc.Tests
         }
 
         [TestMethod]
+        void parseSubExprWithThreeTerms()
+        {
+            ExprParser parser = new ExprParser();
+            ExprNode exprAST = parser.parseExpr("1 - 3 - 7");
+
+            Assert.isOfType(exprAST, typeof(SubExprNode));
+            SubExprNode add_7 = exprAST as SubExprNode;
+            Assert.isOfType(add_7.LeftOperand, typeof(SubExprNode));
+            Assert.isOfType(add_7.RightOperand, typeof(NumberNode));
+            Assert.areEq(new Number("7"), (add_7.RightOperand as NumberNode).Value);
+            SubExprNode add_3 = add_7.LeftOperand as SubExprNode;
+            Assert.isOfType(add_3.LeftOperand, typeof(NumberNode));
+            Assert.isOfType(add_3.RightOperand, typeof(NumberNode));
+            Assert.areEq(new Number("1"), (add_3.LeftOperand as NumberNode).Value);
+            Assert.areEq(new Number("3"), (add_3.RightOperand as NumberNode).Value);
+        }
+
+        [TestMethod]
         void parseMulExpr()
         {
             ExprParser parser = new ExprParser();
