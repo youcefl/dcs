@@ -195,5 +195,17 @@ namespace dcs.Tests
             Assert.isTrue(mulExpr.RightOperand as NumberNode != null);
             Assert.areEq(new Number("3"), (mulExpr.RightOperand as NumberNode).Value);
         }
+
+        [TestMethod]
+        void parseAddAndParenthesizedExpr()
+        {
+            ExprParser parser = new ExprParser();
+            ExprNode exprAST = parser.parseExpr("(1+2)*6");
+
+            Assert.isOfType(exprAST, typeof(MulExprNode));
+            MulExprNode mulExpr = exprAST as MulExprNode;
+            Assert.isOfType(mulExpr.LeftOperand, typeof(AddExprNode));
+            Assert.isOfType(mulExpr.RightOperand, typeof(NumberNode));
+        }
     }
 }

@@ -77,5 +77,12 @@ namespace dcs.Tests
                                                              ) 
                                             ) );
         }
+
+        [TestMethod]
+        void evaluteDivExpression()
+        {
+            ExprEvaluator evaluator = new ExprEvaluator();
+            Assert.areEq(new Number("27"), evaluator.evaluate(new DivExprNode(new NumberNode("81"), new NumberNode("3"))));
+        }
     }
 }
