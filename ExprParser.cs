@@ -37,13 +37,23 @@ namespace dcs
 		{
 			myLexer = new ExprLexer(expr);
 	
-			return parseExpr();
+			return parseRootExpr();
 		}
 
-		ExprNode parseExpr()
+		ExprNode parseRootExpr()
 		{
-			return parseAddExpr();
+			ExprNode exprNode = parseExpr();
+            if( myLexer.getCurrentToken().Id != TokId.EOS )
+            {
+                throw new ParseException(string.Format("Unexpected token `{0}' encountered", myLexer.getCurrentToken().ToString()));
+            }
+            return exprNode;
 		}
+
+        ExprNode parseExpr()
+        {
+            return parseAddExpr();
+        }
 
 		ExprNode parseAddExpr()
 		{

@@ -30,12 +30,12 @@ namespace dcs.Tests
 	/// <summary>
 	/// Summary description for ParserTest.
 	/// </summary>
-	[TestClass]
-	public class ParserTests
-	{
-		public ParserTests()
-		{
-		}
+    [TestClass]
+    public class ParserTests
+    {
+        public ParserTests()
+        {
+        }
 
         [TestMethod]
         void parseNumberTest()
@@ -206,6 +206,17 @@ namespace dcs.Tests
             MulExprNode mulExpr = exprAST as MulExprNode;
             Assert.isOfType(mulExpr.LeftOperand, typeof(AddExprNode));
             Assert.isOfType(mulExpr.RightOperand, typeof(NumberNode));
+        }
+
+        void parseInvalidExprMethod()
+        {
+            ExprParser parser = new ExprParser();
+            parser.parseExpr("1+2(");
+        }
+        [TestMethod]
+        void parseInvalidExpr()
+        {
+            Assert.throws(new TestMethod(parseInvalidExprMethod), typeof(ParseException));
         }
     }
 }

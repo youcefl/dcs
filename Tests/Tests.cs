@@ -96,6 +96,19 @@ namespace dcs.Tests
     }
 
     /// <summary>
+    /// 
+    /// </summary>
+    class AssertionFailedException : System.Exception
+    {
+        public AssertionFailedException(string message)
+            : base(message)
+        {
+        }
+    }
+
+    delegate void TestMethod();
+
+    /// <summary>
     /// Assertions class
     /// </summary>
     class Assert
@@ -108,7 +121,7 @@ namespace dcs.Tests
         public static void areEq(object a, object b)
         {
             if( !a.Equals(b) ) {
-                throw new System.Exception("Equality assertion failed.");
+                throw new AssertionFailedException("Equality assertion failed.");
             }
         }
 
@@ -119,7 +132,7 @@ namespace dcs.Tests
         public static void isTrue(bool cond)
         {
             if( !cond ) {
-                throw new System.Exception("Assertion failed.");
+                throw new AssertionFailedException("Assertion failed.");
             }
         }
 
@@ -131,8 +144,28 @@ namespace dcs.Tests
         public static void isOfType(object value, object type)
         {
             if( value.GetType() != type ) {
-                throw new System.Exception(string.Format("Object has not the expected type, expected type: `{0}', actual type: `{1}'", type, value.GetType()));
+                throw new AssertionFailedException( string.Format( "Object has not the expected type, expected type: `{0}', actual type: `{1}'"
+                                                                 , type, value.GetType() )
+                                                  );
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="type"></param>
+        public static void throws(TestMethod m, object type)
+        {
+            try {
+                m();
+            } catch(System.Exception e) {
+                if(type != e.GetType()) {
+                    throw new AssertionFailedException(string.Format("An exception of type `{0}' was thrown whereas an exception of type `{1}' was expected", e.GetType(), type));
+                }
+                return;
+            }
+            throw new AssertionFailedException("Expected exception not thrown");
         }
     }
 }
