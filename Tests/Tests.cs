@@ -57,22 +57,27 @@ namespace dc.Tests
                     }
                     System.Reflection.ConstructorInfo ctor = t.GetConstructor(new System.Type[]{});
                     object testClassInstance = ctor.Invoke(new object[]{});
-                    bool hasTestFailed = false;
+                    int methodNameLength = m.Name.Length;
                     try {
                         System.Console.Out.Write("-> {0}", m.Name);
                         m.Invoke(testClassInstance, new object[]{});
+                        printTestResult(true, methodNameLength);
                     } catch (System.Reflection.TargetInvocationException ex) {
-                        hasTestFailed = true;
-                        System.Console.Error.WriteLine("  FAIL");
+                        printTestResult(false, methodNameLength);
                         System.Console.Error.WriteLine("   Test `{0}' failed: {1}", m.Name, ex.InnerException.Message);
                         ret += 1;
-                    }
-                    if( ! hasTestFailed ) {
-                        System.Console.Out.WriteLine("  OK");
                     }
                 }
             }
             return ret;
+        }
+
+        static void printTestResult(bool isTestSuccessful, int methodNameLength)
+        {
+            while(methodNameLength++ < 45) {
+                System.Console.Write(' ');
+            }
+            System.Console.WriteLine(isTestSuccessful ? "OK" : "FAIL");
         }
 	}
 
