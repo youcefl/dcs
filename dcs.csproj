@@ -7,9 +7,9 @@
     >
         <Build>
             <Settings
-                ApplicationIcon = "res\dc.ico"
+                ApplicationIcon = "res\dcs.ico"
                 AssemblyKeyContainerName = ""
-                AssemblyName = "dc"
+                AssemblyName = "dcs"
                 AssemblyOriginatorKeyFile = ""
                 DefaultClientScript = "JScript"
                 DefaultHTMLPageLayout = "Grid"
@@ -18,7 +18,7 @@
                 OutputType = "Exe"
                 PreBuildEvent = ""
                 PostBuildEvent = ""
-                RootNamespace = "dc"
+                RootNamespace = "dcs"
                 RunPostBuildEvent = "OnBuildSuccess"
                 StartupObject = ""
             >
@@ -99,6 +99,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "ExprLexer.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "ExprNodes.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -134,7 +139,7 @@
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "res\dc.ico"
+                    RelPath = "res\dcs.ico"
                     BuildAction = "Content"
                 />
                 <File

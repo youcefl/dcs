@@ -1,5 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 8.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dc", "dc.csproj", "{8803C38D-3A74-4CF7-9294-FF7E4E3BEA6B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dcs", "dcs.csproj", "{8803C38D-3A74-4CF7-9294-FF7E4E3BEA6B}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
