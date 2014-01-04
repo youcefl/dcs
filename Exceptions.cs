@@ -25,7 +25,7 @@
  * Creation date: 2014.01.03
  **/
 
-namespace dc
+namespace dcs
 {
 	/// <summary>
 	/// Summary description for Exceptions.

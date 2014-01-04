@@ -25,7 +25,7 @@
  * Creation date: 2013.06.25
  **/
 
-namespace dc
+namespace dcs
 {
 	/// <summary>
 	/// Summary description for IExprVisitor.

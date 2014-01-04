@@ -25,7 +25,7 @@
  * Creation date: 2013.01.04
  **/
 
-namespace dc
+namespace dcs
 {
     enum TokId
     {

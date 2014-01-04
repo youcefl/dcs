@@ -26,7 +26,7 @@
  **/
 
 
-namespace dc
+namespace dcs
 {
 	/// <summary>
 	/// Summary description for ExprPrinter.

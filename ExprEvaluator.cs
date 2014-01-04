@@ -27,7 +27,7 @@
 using System;
 using std = System.Collections;
 
-namespace dc
+namespace dcs
 {
 	/// <summary>
 	/// Summary description for ExprEvaluator.

@@ -25,7 +25,7 @@
  * Creation date: 2013.07.11
  **/
 
-namespace dc.Tests
+namespace dcs.Tests
 {
 	/// <summary>
 	/// Summary description for Tests.

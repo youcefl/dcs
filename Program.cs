@@ -26,7 +26,7 @@
  **/
 using System;
 
-namespace dc
+namespace dcs
 {
 	/// <summary>
 	/// Summary description for Program.
@@ -52,7 +52,7 @@ namespace dc
 
             if( (args.Length == 1) && (args[0] == "-t") )
             {
-                return dc.Tests.Tests.run();
+                return Tests.Tests.run();
             }
 
             bool isVerbose = false;

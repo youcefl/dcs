@@ -26,7 +26,7 @@
  **/
 using System;
 
-namespace dc
+namespace dcs
 {
 	/// <summary>
 	/// Summary description for Number.

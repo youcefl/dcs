@@ -27,7 +27,7 @@
  **/
 
 
-namespace dc
+namespace dcs
 {
 	/// <summary>
 	/// Abstract base class for all expression nodes.
