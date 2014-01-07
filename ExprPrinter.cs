@@ -98,6 +98,16 @@ namespace dcs
                 unIndent();
                 myWriter.WriteLine("{0}</Div>", myTabs);
             }
+            public override void visitIn(PowExprNode n)
+            {
+                myWriter.WriteLine("{0}<Pow>", myTabs);
+                indent();
+            }
+            public override void visitOut(PowExprNode n)
+            {
+                unIndent();
+                myWriter.WriteLine("{0}</Pow>", myTabs);
+            }
 
 			void indent()
 			{

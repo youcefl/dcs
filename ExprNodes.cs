@@ -157,4 +157,23 @@ namespace dcs
             v.visitOut(this);
         }
     }
+
+    /// <summary>
+    /// Exponentiation expression
+    /// </summary>
+    class PowExprNode : BinaryExprNode
+    {
+        public PowExprNode(ExprNode leftOp, ExprNode rightOp)
+            : base(leftOp, rightOp)
+        {
+        }
+
+        public override void accept(ExprVisitor v)
+        {
+            v.visitIn(this);
+            LeftOperand.accept(v);
+            RightOperand.accept(v);
+            v.visitOut(this);
+        }
+    }
 }

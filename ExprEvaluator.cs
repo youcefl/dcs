@@ -85,6 +85,13 @@ namespace dcs
                 myValueStack.Push(e1 / e2);
             }
 
+            public override void visitOut(PowExprNode n)
+            {
+                Number e2 = (Number)myValueStack.Pop();
+                Number e1 = (Number)myValueStack.Pop();
+                myValueStack.Push(e1 ^ e2);
+            }
+
 			public Number Value 
 			{
 				get { return (Number)myValueStack.Peek(); }

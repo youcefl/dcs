@@ -36,6 +36,7 @@ namespace dcs
         DIV_OP,     //!< Division operator '/'
         LPAR,       //!< Left parenthesis
         RPAR,       //!< Right parenthesis
+        CARET,      //!< Caret '^'
         EOS         //!< End of stream
     }
 
@@ -118,6 +119,7 @@ namespace dcs
                     case '/': return buildRecognizedToken(TokId.DIV_OP,   "/");
                     case '(': return buildRecognizedToken(TokId.LPAR,     "(");
                     case ')': return buildRecognizedToken(TokId.RPAR,     ")");
+                    case '^': return buildRecognizedToken(TokId.CARET,    "^");
                     case '0': case '1': case '2': case '3': case '4':
                     case '5': case '6': case '7': case '8': case '9': 
                     {

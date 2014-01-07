@@ -75,6 +75,14 @@ namespace dcs
         {
         }
 
+        public virtual void visitIn(PowExprNode n)
+        {
+        }
+
+        public virtual void visitOut(PowExprNode n)
+        {
+        }
+
 		#endregion
 	}
 }

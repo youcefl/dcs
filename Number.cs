@@ -58,6 +58,10 @@ namespace dcs
         {
             return new Number(a.myValue / b.myValue);
         }
+        public static Number operator ^(Number a, Number b)
+        {
+            return new Number((int)Math.Pow(a.myValue, b.myValue));
+        }
 
 		public override string ToString()
 		{

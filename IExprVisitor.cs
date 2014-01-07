@@ -42,6 +42,8 @@ namespace dcs
         void visitOut(MulExprNode n);
         void visitIn(DivExprNode n);
         void visitOut(DivExprNode n);
+        void visitIn(PowExprNode n);
+        void visitOut(PowExprNode n);
     }
 }
 

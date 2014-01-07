@@ -81,19 +81,19 @@ namespace dcs
 
 		ExprNode parseMulExpr()
 		{
-			ExprNode left = parseTerm();
+			ExprNode left = parsePowExpr();
             bool endLoop = false;
 			for(Token tok = myLexer.getCurrentToken(); !endLoop; tok = myLexer.getCurrentToken()) {
                 switch( tok.Id ) {
                     case TokId.MUL_OP: {
                         myLexer.getNextToken();
-                        ExprNode right = parseTerm();
+                        ExprNode right = parsePowExpr();
                         left = new MulExprNode(left, right);
                         break;
                     }
                     case TokId.DIV_OP: {
                         myLexer.getNextToken();
-                        ExprNode right = parseTerm();
+                        ExprNode right = parsePowExpr();
                         left = new DivExprNode(left, right);
                         break;
                     }
@@ -104,6 +104,26 @@ namespace dcs
 			}
             return left;
 		}
+
+        ExprNode parsePowExpr()
+        {
+            ExprNode left = parseTerm();
+            bool endLoop = false;
+            for(Token tok = myLexer.getCurrentToken(); !endLoop; tok = myLexer.getCurrentToken()) {
+                switch(tok.Id) {
+                    case TokId.CARET: {
+                        myLexer.getNextToken();
+                        ExprNode right = parsePowExpr();
+                        left = new PowExprNode(left, right);
+                        break;
+                    }
+                    default:
+                        endLoop = true;
+                        break;
+                }
+            }
+            return left;
+        }
 
         ExprNode parseTerm()
         {
